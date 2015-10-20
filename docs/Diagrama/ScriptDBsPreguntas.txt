@@ -1,0 +1,125 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+CREATE SCHEMA IF NOT EXISTS `preguntas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+USE `preguntas` ;
+preguntas
+-- -----------------------------------------------------
+-- Table `preguntas`.`materia`
+-- -----------------------------------------------------pregunta
+DROP TABLE IF EXISTS `preguntas`.`materia` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`materia` (
+  `idmateria` INT NOT NULL AUTO_INCREMENT ,
+  `descri_materia` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`idmateria`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `preguntas`.`respuesta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `preguntas`.`respuesta` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`respuesta` (
+  `idrespuesta` INT NOT NULL AUTO_INCREMENT ,
+  `descri_respuesta` VARCHAR(45) NOT NULL ,
+  `veracidad_respuesta` VARCHAR(6) NOT NULL ,
+  PRIMARY KEY (`idrespuesta`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `preguntas`.`pregunta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `preguntas`.`pregunta` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`pregunta` (
+  `idpregunta` INT NOT NULL AUTO_INCREMENT ,
+  `descri_pregunta` VARCHAR(45) NULL ,
+  `tipo_pregunta` VARCHAR(45) NULL ,
+  `materia_idmateria` INT NOT NULL ,
+  `respuesta_idrespuesta` INT NOT NULL ,
+  `dificultad_pregunta` VARCHAR(45) NULL ,
+  `peso_pregunta` INT NULL ,
+  PRIMARY KEY (`idpregunta`) ,
+  INDEX `fk_pregunta_materia` (`materia_idmateria` ASC) ,
+  INDEX `fk_pregunta_respuesta1` (`respuesta_idrespuesta` ASC) ,
+  CONSTRAINT `fk_pregunta_materia`
+    FOREIGN KEY (`materia_idmateria` )
+    REFERENCES `preguntas`.`materia` (`idmateria` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pregunta_respuesta1`
+    FOREIGN KEY (`respuesta_idrespuesta` )
+    REFERENCES `preguntas`.`respuesta` (`idrespuesta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `preguntas`.`pregunta_has_respuesta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `preguntas`.`pregunta_has_respuesta` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`pregunta_has_respuesta` (
+  `pregunta_idpregunta` INT NOT NULL ,
+  `respuesta_idrespuesta` INT NOT NULL ,
+  PRIMARY KEY (`pregunta_idpregunta`, `respuesta_idrespuesta`) ,
+  INDEX `fk_pregunta_has_respuesta_respuesta1` (`respuesta_idrespuesta` ASC) ,
+  INDEX `fk_pregunta_has_respuesta_pregunta1` (`pregunta_idpregunta` ASC) ,
+  CONSTRAINT `fk_pregunta_has_respuesta_pregunta1`
+    FOREIGN KEY (`pregunta_idpregunta` )
+    REFERENCES `preguntas`.`pregunta` (`idpregunta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pregunta_has_respuesta_respuesta1`
+    FOREIGN KEY (`respuesta_idrespuesta` )
+    REFERENCES `preguntas`.`respuesta` (`idrespuesta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `preguntas`.`examen`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `preguntas`.`examen` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`examen` (
+  `idexamen` INT NOT NULL AUTO_INCREMENT ,
+  `descri_examen` VARCHAR(45) NULL ,
+  PRIMARY KEY (`idexamen`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `preguntas`.`examen_has_pregunta`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `preguntas`.`examen_has_pregunta` ;
+
+CREATE  TABLE IF NOT EXISTS `preguntas`.`examen_has_pregunta` (
+  `examen_idexamen` INT NOT NULL ,
+  `pregunta_idpregunta` INT NOT NULL ,
+  PRIMARY KEY (`examen_idexamen`, `pregunta_idpregunta`) ,
+  INDEX `fk_examen_has_pregunta_pregunta1` (`pregunta_idpregunta` ASC) ,
+  INDEX `fk_examen_has_pregunta_examen1` (`examen_idexamen` ASC) ,
+  CONSTRAINT `fk_examen_has_pregunta_examen1`
+    FOREIGN KEY (`examen_idexamen` )
+    REFERENCES `preguntas`.`examen` (`idexamen` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_examen_has_pregunta_pregunta1`
+    FOREIGN KEY (`pregunta_idpregunta` )
+    REFERENCES `preguntas`.`pregunta` (`idpregunta` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
