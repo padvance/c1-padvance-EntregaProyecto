@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListExamenTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ExamenListForm">
+                <p:panel header="#{bundle.ListExamenTitle}">
+                    <p:dataTable id="datalist" value="#{examenController.items}" var="item"
+                                 selectionMode="single" selection="#{examenController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idexamen}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton generate"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton generate"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamenTitle_idexamen}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idexamen}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExamenTitle_descriExamen}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriExamen}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{examenController.prepareCreate}" update=":ExamenCreateForm" oncomplete="PF('ExamenCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ExamenViewForm" oncomplete="PF('ExamenViewDialog').show()" disabled="#{empty examenController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ExamenEditForm" oncomplete="PF('ExamenEditDialog').show()" disabled="#{empty examenController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{examenController.destroy}" update=":growl,datalist" disabled="#{empty examenController.selected}"/>
+                            <p:commandButton id="generate" icon="ui-icon-play"  value="Generar Examen" update=":ExamenGenerarForm" oncomplete="PF('ExamenGenerarDialog').show()" disabled="#{empty examenController.selected}"/>
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="generar.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

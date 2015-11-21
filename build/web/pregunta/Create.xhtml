@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PreguntaCreateDlg" widgetVar="PreguntaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePreguntaTitle}">
+            <h:form id="PreguntaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{preguntaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_idpregunta}" for="idpregunta" />
+                        <p:inputText id="idpregunta" value="#{preguntaController.selected.idpregunta}" title="#{bundle.CreatePreguntaTitle_idpregunta}" required="true" requiredMessage="#{bundle.CreatePreguntaRequiredMessage_idpregunta}"/>
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_descriPregunta}" for="descriPregunta" />
+                        <p:inputText id="descriPregunta" value="#{preguntaController.selected.descriPregunta}" title="#{bundle.CreatePreguntaTitle_descriPregunta}" />
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_tipoPregunta}" for="tipoPregunta" />
+                        <p:selectOneMenu id="tipoPregunta" value="#{preguntaController.selected.tipoPregunta}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue="" />
+                            <f:selectItem itemLabel="Abierta" itemValue="Abierta" />
+                            <f:selectItem itemLabel="Booleana" itemValue="Booleana" />
+                            <f:selectItem itemLabel="Completar" itemValue="Completar" />
+                            <f:selectItem itemLabel="Seleccion Multiple UR" itemValue="Seleccion Multiple UR" />
+                            <f:selectItem itemLabel="Seleccion Multiple MR" itemValue="Seleccion Multiple MR" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_dificultadPregunta}" for="dificultadPregunta" />
+                        <p:selectOneMenu id="dificultadPregunta" value="#{preguntaController.selected.dificultadPregunta}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue="" />
+                            <f:selectItem itemLabel="Alto" itemValue="Alto" />
+                            <f:selectItem itemLabel="Media" itemValue="Media" />
+                            <f:selectItem itemLabel="Baja" itemValue="Baja" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_pesoPregunta}" for="pesoPregunta" />
+                        <p:inputText id="pesoPregunta" value="#{preguntaController.selected.pesoPregunta}" title="#{bundle.CreatePreguntaTitle_pesoPregunta}" />
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_materiaIdmateria}" for="materiaIdmateria" />
+                        <p:selectOneMenu id="materiaIdmateria" value="#{preguntaController.selected.materiaIdmateria}" required="true" requiredMessage="#{bundle.EditPreguntaRequiredMessage_materiaIdmateria}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue="" />
+                            <f:selectItems value="#{materiaController.itemsAvailableSelectOne}"
+                                           var="materiaIdmateriaItem"
+                                           itemValue="#{materiaIdmateriaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePreguntaLabel_respuestaIdrespuesta}" for="respuestaIdrespuesta" />
+                        <p:selectOneMenu id="respuestaIdrespuesta" value="#{preguntaController.selected.respuestaIdrespuesta}" required="true" requiredMessage="#{bundle.EditPreguntaRequiredMessage_respuestaIdrespuesta}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue="" />
+                            <f:selectItems value="#{respuestaController.itemsAvailableSelectOne}"
+                                           var="respuestaIdrespuestaItem"
+                                           itemValue="#{respuestaIdrespuestaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{preguntaController.create}" value="#{bundle.Save}" update="display,:PreguntaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PreguntaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PreguntaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

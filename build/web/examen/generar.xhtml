@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ExamenGenerarDlg" widgetVar="ExamenGenerarDialog" modal="true" resizable="false" appendTo="@(body)" header="Generar examen">
+            <h:form id="ExamenGenerarForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{examenController.selectedGenera != null}">
+                        <h:outputText value="#{bundle.ViewExamenLabel_idexamen}"/>
+                        <h:outputText value="#{examenController.selectedGenera.idexamen}" title="#{bundle.ViewExamenTitle_idexamen}"/>
+                        <h:outputText value="#{bundle.ViewExamenLabel_descriExamen}"/>
+                        <h:outputText value="#{examenController.selectedGenera.descriExamen}" title="#{bundle.ViewExamenTitle_descriExamen}"/>
+                    </p:panelGrid>
+                    
+                    <p:dataTable id="datalist" value="#{preguntaExamenController.items}" var="item"
+                                 selectionMode="single" selection="#{preguntaExamenController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idExampreg}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Pregunta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.preguntaIdpregunta.descriPregunta}"/>
+                        </p:column>                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Respuesta"/>
+                            </f:facet>
+                            <h:outputText value="#{item.preguntaIdpregunta.respuestaIdrespuesta.descriRespuesta}"/>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:commandButton value="#{bundle.Close}" onclick="ExamenGenerarDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

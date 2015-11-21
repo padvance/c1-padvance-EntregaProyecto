@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PreguntaExamenCreateDlg" widgetVar="PreguntaExamenCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePreguntaExamenTitle}">
+            <h:form id="PreguntaExamenCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{preguntaExamenController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePreguntaExamenLabel_idExampreg}" for="idExampreg" />
+                        <p:inputText id="idExampreg" value="#{preguntaExamenController.selected.idExampreg}" title="#{bundle.CreatePreguntaExamenTitle_idExampreg}" required="true" requiredMessage="#{bundle.CreatePreguntaExamenRequiredMessage_idExampreg}"/>
+                        <p:outputLabel value="#{bundle.CreatePreguntaExamenLabel_examenIdexamen}" for="examenIdexamen" />
+                        <p:selectOneMenu id="examenIdexamen" value="#{preguntaExamenController.selected.examenIdexamen}" required="true" requiredMessage="#{bundle.EditPreguntaExamenRequiredMessage_examenIdexamen}">
+                            <f:selectItems value="#{examenController.itemsAvailableSelectOne}"
+                                           var="examenIdexamenItem"
+                                           itemValue="#{examenIdexamenItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePreguntaExamenLabel_preguntaIdpregunta}" for="preguntaIdpregunta" />
+                        <p:selectOneMenu id="preguntaIdpregunta" value="#{preguntaExamenController.selected.preguntaIdpregunta}" required="true" requiredMessage="#{bundle.EditPreguntaExamenRequiredMessage_preguntaIdpregunta}">
+                            <f:selectItems value="#{preguntaController.itemsAvailableSelectOne}"
+                                           var="preguntaIdpreguntaItem"
+                                           itemValue="#{preguntaIdpreguntaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{preguntaExamenController.create}" value="#{bundle.Save}" update="display,:PreguntaExamenListForm:datalist,:growl" oncomplete="handleSubmit(args,'PreguntaExamenCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PreguntaExamenCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

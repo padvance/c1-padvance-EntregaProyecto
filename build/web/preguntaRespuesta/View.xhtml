@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PreguntaRespuestaViewDlg" widgetVar="PreguntaRespuestaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPreguntaRespuestaTitle}">
+            <h:form id="PreguntaRespuestaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{preguntaRespuestaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPreguntaRespuestaLabel_idPregrespueta}"/>
+                        <h:outputText value="#{preguntaRespuestaController.selected.idPregrespueta}" title="#{bundle.ViewPreguntaRespuestaTitle_idPregrespueta}"/>
+                        <h:outputText value="#{bundle.ViewPreguntaRespuestaLabel_preguntaIdpregunta}"/>
+                        <h:outputText value="#{preguntaRespuestaController.selected.preguntaIdpregunta}" title="#{bundle.ViewPreguntaRespuestaTitle_preguntaIdpregunta}"/>
+                        <h:outputText value="#{bundle.ViewPreguntaRespuestaLabel_respuestaIdrespuesta}"/>
+                        <h:outputText value="#{preguntaRespuestaController.selected.respuestaIdrespuesta}" title="#{bundle.ViewPreguntaRespuestaTitle_respuestaIdrespuesta}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PreguntaRespuestaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

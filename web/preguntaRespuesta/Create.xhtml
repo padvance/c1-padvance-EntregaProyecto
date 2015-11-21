@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PreguntaRespuestaCreateDlg" widgetVar="PreguntaRespuestaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePreguntaRespuestaTitle}">
+            <h:form id="PreguntaRespuestaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{preguntaRespuestaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePreguntaRespuestaLabel_idPregrespueta}" for="idPregrespueta" />
+                        <p:inputText id="idPregrespueta" value="#{preguntaRespuestaController.selected.idPregrespueta}" title="#{bundle.CreatePreguntaRespuestaTitle_idPregrespueta}" required="true" requiredMessage="#{bundle.CreatePreguntaRespuestaRequiredMessage_idPregrespueta}"/>
+                        <p:outputLabel value="#{bundle.CreatePreguntaRespuestaLabel_preguntaIdpregunta}" for="preguntaIdpregunta" />
+                        <p:selectOneMenu id="preguntaIdpregunta" value="#{preguntaRespuestaController.selected.preguntaIdpregunta}" required="true" requiredMessage="#{bundle.EditPreguntaRespuestaRequiredMessage_preguntaIdpregunta}">
+                            <f:selectItems value="#{preguntaController.itemsAvailableSelectOne}"
+                                           var="preguntaIdpreguntaItem"
+                                           itemValue="#{preguntaIdpreguntaItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePreguntaRespuestaLabel_respuestaIdrespuesta}" for="respuestaIdrespuesta" />
+                        <p:selectOneMenu id="respuestaIdrespuesta" value="#{preguntaRespuestaController.selected.respuestaIdrespuesta}" required="true" requiredMessage="#{bundle.EditPreguntaRespuestaRequiredMessage_respuestaIdrespuesta}">
+                            <f:selectItems value="#{respuestaController.itemsAvailableSelectOne}"
+                                           var="respuestaIdrespuestaItem"
+                                           itemValue="#{respuestaIdrespuestaItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{preguntaRespuestaController.create}" value="#{bundle.Save}" update="display,:PreguntaRespuestaListForm:datalist,:growl" oncomplete="handleSubmit(args,'PreguntaRespuestaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PreguntaRespuestaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
