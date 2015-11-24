@@ -1,4 +1,4 @@
-controlador
-modelo
-server
-vista
+ucentral.controlador
+ucentral.modelo
+ucentral.vista
+ucentral.vista.util
