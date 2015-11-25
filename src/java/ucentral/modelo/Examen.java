@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author rm-rf
+ * @author wvelascot
  */
 @Entity
 @Table(name = "examen", catalog = "preguntas", schema = "")
@@ -99,6 +99,16 @@ public class Examen implements Serializable {
     @Override
     public String toString() {
         return "[ id=" + idexamen + ", descripcion="+getDescriExamen()+" ]";
+    }
+    
+    @XmlTransient
+    public Memento guardar(){
+        return new Memento(this);
+    }
+    
+    public void volverUltimoEstado(Object obj){
+        Memento m = (Memento) obj;
+        this.descriExamen = m.getDescriExamen();
     }
     
 }

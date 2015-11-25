@@ -24,8 +24,8 @@
                                  rowsPerPageTemplate="10,20,30,40,50"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton generate"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton generate"/>
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton generate estadoAnterior"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton generate estadoAnterior"/>
 
                         <p:column>
                             <f:facet name="header">
@@ -45,7 +45,7 @@
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ExamenEditForm" oncomplete="PF('ExamenEditDialog').show()" disabled="#{empty examenController.selected}"/>
                             <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{examenController.destroy}" update=":growl,datalist" disabled="#{empty examenController.selected}"/>
                             <p:commandButton id="generate" icon="ui-icon-play"  value="Generar Examen" update=":ExamenGenerarForm" oncomplete="PF('ExamenGenerarDialog').show()" disabled="#{empty examenController.selected}"/>
-                            
+                            <p:commandButton id="estadoAnterior" icon="ui-icon-seek-prev"  value="Anterior Estado" actionListener="#{examenController.anteriorEstado}" update=":growl,datalist" disabled="#{empty examenController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

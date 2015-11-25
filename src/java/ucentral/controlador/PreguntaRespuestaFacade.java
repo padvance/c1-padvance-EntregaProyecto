@@ -12,7 +12,7 @@ import ucentral.modelo.PreguntaRespuesta;
 
 /**
  *
- * @author rm-rf
+ * @author sgomez
  */
 @Stateless
 public class PreguntaRespuestaFacade extends AbstractFacade<PreguntaRespuesta> {

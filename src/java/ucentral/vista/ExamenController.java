@@ -8,6 +8,7 @@ import ucentral.controlador.ExamenFacade;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -19,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import ucentral.modelo.CareTaker;
 
 @ManagedBean(name = "examenController")
 @SessionScoped
@@ -28,6 +30,7 @@ public class ExamenController implements Serializable {
     private ucentral.controlador.ExamenFacade ejbFacade;
     private List<Examen> items = null;
     private Examen selected;
+    private CareTaker careTaker = new CareTaker();
 
     public ExamenController() {
     }
@@ -46,6 +49,7 @@ public class ExamenController implements Serializable {
     }
 
     public void setSelected(Examen selected) {
+//        careTaker.addMemento(selected.guardar());
         this.selected = selected;
     }
 
@@ -97,6 +101,7 @@ public class ExamenController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
+            careTaker.addMemento(selected.guardar());
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
@@ -170,6 +175,10 @@ public class ExamenController implements Serializable {
             }
         }
 
+    }
+
+    public void anteriorEstado(){        
+        selected.volverUltimoEstado(careTaker.getAnterior());
     }
 
 }

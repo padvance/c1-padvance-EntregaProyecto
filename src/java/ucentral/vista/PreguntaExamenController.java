@@ -95,7 +95,7 @@ public class PreguntaExamenController implements Serializable {
                     if(val * 2 < items.size()){
                         nItems.add(items.get((int) (val * 2)));                        
                     }
-                    if (nItems.size()<2){
+                    if (nItems.size()<2 && i == 1){
                         i--;
                     }
                 }

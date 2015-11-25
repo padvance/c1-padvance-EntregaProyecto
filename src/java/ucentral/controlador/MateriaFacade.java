@@ -12,7 +12,7 @@ import ucentral.modelo.Materia;
 
 /**
  *
- * @author rm-rf
+ * @author sgomez
  */
 @Stateless
 public class MateriaFacade extends AbstractFacade<Materia> {
